@@ -7,8 +7,13 @@ const Category = () => {
 
   const newList = (event) => {
     event.preventDefault();
+
     formRef.current.reset();
   };
+
+  //   const fetchCategories async () =>{
+
+  //   }
 
   const addingTitle = (e) => {
     setTitle(e.target.value);
