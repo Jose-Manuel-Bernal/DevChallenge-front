@@ -1,19 +1,41 @@
-import React, { useState, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
+import { Store } from "./StoreProvider";
 
 const Category = () => {
   const formRef = useRef(null);
 
-  const [title, setTitle] = useState("");
-
-  const newList = (event) => {
+  const newList = async (event) => {
     event.preventDefault();
+    if (title) {
+      const newCategory = {
+        title,
+      };
 
-    formRef.current.reset();
+      let categorySavedPromise = await fetch(
+        "http://localhost:8081/to-do/api/save/category",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(newCategory),
+        }
+      );
+
+      let categorySaved = await categorySavedPromise.json();
+
+      dispatch({
+        type: "add-category",
+        payload: categorySaved,
+      });
+
+      formRef.current.reset();
+    }
   };
 
-  //   const fetchCategories async () =>{
-
-  //   }
+  const { state, dispatch } = useContext(Store);
+  console.log(state);
+  const [title, setTitle] = useState("");
 
   const addingTitle = (e) => {
     setTitle(e.target.value);

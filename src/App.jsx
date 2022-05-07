@@ -10,6 +10,7 @@ function App() {
       <h1>To do List App</h1>
       <StoreProvider>
         <Category />
+        {/* <Form /> */}
       </StoreProvider>
     </div>
   );

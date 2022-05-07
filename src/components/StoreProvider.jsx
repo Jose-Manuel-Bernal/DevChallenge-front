@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 import reducer from "./Reducer";
 
 const initialState = {
-  listOfCategories: [],
+  categoryList: [],
 };
 
 const Store = createContext(initialState);
