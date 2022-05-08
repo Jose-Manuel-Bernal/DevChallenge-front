@@ -1,46 +1,48 @@
 import React, { useContext, useState, useRef } from "react";
 import { Store } from "./StoreProvider";
+import ListOfToDo from "./ListOfToDo";
 
 const Form = () => {
   const formRef = useRef(null);
 
   const { state, dispatch } = useContext(Store);
 
-  const onAdd = async (event) => {
+  const [message, setMessage] = useState("");
+
+  const onAddNote = async (event, category) => {
     event.preventDefault();
-    // if (title && message) {
-    //   const noteFromForm = {
-    //     title,
-    //     message,
-    //     done: false,
-    //   };
+    if (message) {
+      const noteFromForm = {
+        message,
+        done: false,
+        idOfCategory: category.id,
+      };
 
-    //   let noteSavedPromise = await fetch(
-    //     "http://localhost:8081/api/save/note",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify(noteFromForm),
-    //     }
-    //   );
+      let noteSavedPromise = await fetch(
+        "http://localhost:8081/to-do/api/save/note",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(noteFromForm),
+        }
+      );
 
-    //   let noteSaved = await noteSavedPromise.json();
+      let noteSaved = await noteSavedPromise.json();
 
-    //   dispatch({
-    //     type: "add-note",
-    //     payload: noteSaved,
-    //   });
-
-    // }
+      dispatch({
+        type: "add-note",
+        payload: noteSaved,
+      });
+    }
     formRef.current.reset();
   };
 
   const onDeleteCategory = async (event, category) => {
     event.preventDefault();
     let response = await fetch(
-      "http://localhost:8081/to-do/api/delete/category/17",
+      `http://localhost:8081/to-do/api/delete/category/${category.id}`,
       {
         method: "DELETE",
       }
@@ -52,8 +54,6 @@ const Form = () => {
       });
     }
   };
-
-  const [message, setMessage] = useState("");
 
   const addingMessage = (e) => {
     setMessage(e.target.value);
@@ -81,7 +81,11 @@ const Form = () => {
                   name="message"
                   placeholder="What do you plan to do?"
                 />
-                <button onClick={onAdd}>Add note</button>
+                <button onClick={(event) => onAddNote(event, category)}>
+                  Add note
+                </button>
+                <br />
+                <ListOfToDo category={category} />
                 <br /> <br />
               </form>
             </li>

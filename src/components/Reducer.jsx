@@ -7,13 +7,25 @@ function reducer(state, action) {
       // };
       return null;
     case "add-note":
-      // const newNote = action.payload;
-      // const newListOfNotesAddedOne = [...state.listOfNotes, newNote];
-      // const newStateAddNote = {
-      //   ...state,
-      //   listOfNotes: newListOfNotesAddedOne,
-      // };
-      return null;
+      const newNote = action.payload;
+      const categoryFiltered = state.categoryList.filter(
+        (category) => newNote.idOfCategory === category.id
+      )[0];
+      const newListOfNotes = [...categoryFiltered.notes, newNote];
+      const categoryWithNote = { ...categoryFiltered, notes: newListOfNotes };
+      const newListOfCategoriesForNewNote = state.categoryList.map(
+        (category) => {
+          if (category.id === categoryWithNote.id) {
+            return categoryWithNote;
+          }
+          return category;
+        }
+      );
+      const newStateWithNote = {
+        ...state,
+        categoryList: newListOfCategoriesForNewNote,
+      };
+      return newStateWithNote;
     case "remove-note":
       // const newListOfNotesWithoutPayloadNote = state.listOfNotes.filter(
       //   (note) => note.id !== action.payload.id
