@@ -4,6 +4,8 @@ import { Store } from "./StoreProvider";
 const Form = () => {
   const formRef = useRef(null);
 
+  const { state, dispatch } = useContext(Store);
+
   const onAdd = async (event) => {
     event.preventDefault();
     // if (title && message) {
@@ -35,8 +37,6 @@ const Form = () => {
     formRef.current.reset();
   };
 
-  const { state, dispatch } = useContext(Store);
-
   const [message, setMessage] = useState("");
 
   const addingMessage = (e) => {
@@ -46,13 +46,12 @@ const Form = () => {
   return (
     <div>
       <ul>
-        {state.map((category) => {
+        {state.categoryList.map((category) => {
           return (
             <li>
               <form>
-                {state.map((category) => {
-                  <h1>category.title</h1>;
-                })}
+                <h1>{category.title}</h1>
+                <br />
                 <label>Message: </label>
                 <input onChange={addingMessage} type="text" name="message" />
                 <button onClick={onAdd}>Add note</button>

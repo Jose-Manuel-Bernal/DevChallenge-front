@@ -1,6 +1,6 @@
 import "./App.css";
 import Category from "./components/Category";
-//import Form from "./components/Form";
+import Form from "./components/Form";
 //import ListOfToDo from "./components/ListOfToDo";
 import StoreProvider from "./components/StoreProvider";
 
@@ -10,7 +10,7 @@ function App() {
       <h1>To do List App</h1>
       <StoreProvider>
         <Category />
-        {/* <Form /> */}
+        <Form />
       </StoreProvider>
     </div>
   );

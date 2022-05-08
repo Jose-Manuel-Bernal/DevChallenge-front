@@ -1,8 +1,24 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Store } from "./StoreProvider";
 
 const Category = () => {
   const formRef = useRef(null);
+
+  useEffect(() => {
+    let categoyList = fetchAllCategories().then((categories) => {
+      let action = {
+        type: "get-categories",
+        payload: categories,
+      };
+      dispatch(action);
+    });
+  }, []);
+
+  const fetchAllCategories = async () => {
+    let response = await fetch("http://localhost:8081/to-do/api/get/dto");
+    let data = await response.json();
+    return data;
+  };
 
   const newList = async (event) => {
     event.preventDefault();
@@ -34,7 +50,7 @@ const Category = () => {
   };
 
   const { state, dispatch } = useContext(Store);
-  console.log(state);
+
   const [title, setTitle] = useState("");
 
   const addingTitle = (e) => {

@@ -44,6 +44,13 @@ function reducer(state, action) {
         categoryList: newListOfCategories,
       };
       return newStateAddCategory;
+    case "get-categories":
+      const stateWithAllCategories = {
+        ...state,
+        categoryList: action.payload.categoryList,
+      };
+      console.log(action.payload);
+      return stateWithAllCategories;
   }
 }
 
