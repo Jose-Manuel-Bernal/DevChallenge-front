@@ -35,8 +35,9 @@ const Form = () => {
         type: "add-note",
         payload: noteSaved,
       });
+      //formRef.current.reset();
+      setMessage("");
     }
-    formRef.current.reset();
   };
 
   const onDeleteCategory = async (event, category) => {
@@ -76,6 +77,7 @@ const Form = () => {
                 </h1>
                 <br />
                 <input
+                  value={message}
                   onChange={addingMessage}
                   type="text"
                   name="message"

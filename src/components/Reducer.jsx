@@ -36,18 +36,33 @@ function reducer(state, action) {
       // };
       return null;
     case "update-note":
-      // const newListOfNotes = state.listOfNotes.map((note) => {
-      //   if (note.id === action.payload.id) {
-      //     return action.payload;
-      //   }
-      //   return note;
-      // });
-
-      // const newStateModifiedCheckbox = {
-      //   ...state,
-      //   listOfNotes: newListOfNotes,
-      // };
-      return null;
+      const updatedNote = action.payload;
+      const categoryToFilter = state.categoryList.filter(
+        (category) => updatedNote.idOfCategory === category.id
+      )[0];
+      const updatedListOfNotes = categoryToFilter.notes.map((note) => {
+        if (note.id === updatedNote.id) {
+          return updatedNote;
+        }
+        return note;
+      });
+      const categoryWithUpdatedNote = {
+        ...categoryToFilter,
+        notes: updatedListOfNotes,
+      };
+      const newListOfCategoriesForUpdatedNote = state.categoryList.map(
+        (category) => {
+          if (category.id === categoryWithUpdatedNote.id) {
+            return categoryWithUpdatedNote;
+          }
+          return category;
+        }
+      );
+      const newStateWithUpdatedNote = {
+        ...state,
+        categoryList: newListOfCategoriesForUpdatedNote,
+      };
+      return newStateWithUpdatedNote;
     case "add-category":
       const newCategory = action.payload;
       const newListOfCategories = [...state.categoryList, newCategory];
