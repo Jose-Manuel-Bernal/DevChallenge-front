@@ -51,6 +51,16 @@ function reducer(state, action) {
       };
       console.log(action.payload);
       return stateWithAllCategories;
+    case "remove-category":
+      const newListOfCategoriesWithoutPayloadCategory =
+        state.categoryList.filter(
+          (category) => category.id !== action.payload.id
+        );
+      const newStateWithoutCategoryDeleted = {
+        ...state,
+        categoryList: newListOfCategoriesWithoutPayloadCategory,
+      };
+      return newStateWithoutCategoryDeleted;
   }
 }
 

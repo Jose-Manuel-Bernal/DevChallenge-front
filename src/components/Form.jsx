@@ -37,6 +37,22 @@ const Form = () => {
     formRef.current.reset();
   };
 
+  const onDeleteCategory = async (event, category) => {
+    event.preventDefault();
+    let response = await fetch(
+      "http://localhost:8081/to-do/api/delete/category/17",
+      {
+        method: "DELETE",
+      }
+    );
+    if (response.status === 200) {
+      dispatch({
+        type: "remove-category",
+        payload: category,
+      });
+    }
+  };
+
   const [message, setMessage] = useState("");
 
   const addingMessage = (e) => {
@@ -48,13 +64,25 @@ const Form = () => {
       <ul>
         {state.categoryList.map((category) => {
           return (
-            <li>
+            <li key={category.id + 1}>
               <form>
-                <h1>{category.title}</h1>
+                <h1>
+                  {category.title}{" "}
+                  <button
+                    onClick={(event) => onDeleteCategory(event, category)}
+                  >
+                    Delete
+                  </button>
+                </h1>
                 <br />
-                <label>Message: </label>
-                <input onChange={addingMessage} type="text" name="message" />
+                <input
+                  onChange={addingMessage}
+                  type="text"
+                  name="message"
+                  placeholder="What do you plan to do?"
+                />
                 <button onClick={onAdd}>Add note</button>
+                <br /> <br />
               </form>
             </li>
           );
