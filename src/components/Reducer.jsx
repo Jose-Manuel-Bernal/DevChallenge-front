@@ -27,14 +27,30 @@ function reducer(state, action) {
       };
       return newStateWithNote;
     case "remove-note":
-      // const newListOfNotesWithoutPayloadNote = state.listOfNotes.filter(
-      //   (note) => note.id !== action.payload.id
-      // );
-      // const newStateWithNoteDeleted = {
-      //   ...state,
-      //   listOfNotes: newListOfNotesWithoutPayloadNote,
-      // };
-      return null;
+      const noteToRemove = action.payload;
+      const categoryForRemove = state.categoryList.filter(
+        (category) => noteToRemove.idOfCategory === category.id
+      )[0];
+      const updatedListForRemove = categoryForRemove.notes.filter(
+        (note) => note.id !== noteToRemove.id
+      );
+      const categoryWithoutNote = {
+        ...categoryForRemove,
+        notes: updatedListForRemove,
+      };
+      const newListOfCategoriesWithoutNote = state.categoryList.map(
+        (category) => {
+          if (category.id === categoryWithoutNote.id) {
+            return categoryWithoutNote;
+          }
+          return category;
+        }
+      );
+      const newStateWithoutNote = {
+        ...state,
+        categoryList: newListOfCategoriesWithoutNote,
+      };
+      return newStateWithoutNote;
     case "update-note":
       const updatedNote = action.payload;
       const categoryToFilter = state.categoryList.filter(
