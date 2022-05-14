@@ -2,6 +2,12 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { Store } from "./StoreProvider";
 
 const Category = () => {
+  const { state, dispatch } = useContext(Store);
+
+  const [title, setTitle] = useState("");
+
+  const [tag, setTag] = useState("");
+
   const formRef = useRef(null);
 
   useEffect(() => {
@@ -22,9 +28,10 @@ const Category = () => {
 
   const newList = async (event) => {
     event.preventDefault();
-    if (title) {
+    if (title && tag) {
       const newCategory = {
         title,
+        tag,
       };
 
       let categorySavedPromise = await fetch(
@@ -49,12 +56,12 @@ const Category = () => {
     }
   };
 
-  const { state, dispatch } = useContext(Store);
-
-  const [title, setTitle] = useState("");
-
   const addingTitle = (e) => {
     setTitle(e.target.value);
+  };
+
+  const addingTag = (e) => {
+    setTag(e.target.value);
   };
 
   return (
@@ -64,6 +71,12 @@ const Category = () => {
         type="text"
         name="title"
         placeholder="To Do List"
+      />
+      <input
+        onChange={addingTag}
+        type="text"
+        name="tag"
+        placeholder="Note tag"
       />
       <button onClick={newList}>New List</button>
     </form>

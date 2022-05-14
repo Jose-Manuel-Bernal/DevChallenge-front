@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Store } from "./StoreProvider";
 import ListOfToDo from "./ListOfToDo";
 
@@ -8,6 +8,8 @@ const Form = () => {
   const { state, dispatch } = useContext(Store);
 
   const [message, setMessage] = useState("");
+
+  const [searchValue, setSearchValue] = useState("");
 
   const onAddNote = async (event, category) => {
     event.preventDefault();
@@ -60,39 +62,56 @@ const Form = () => {
     setMessage(e.target.value);
   };
 
+  const handleChangeSearchValue = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div>
+      <form>
+        <input
+          onChange={handleChangeSearchValue}
+          type="text"
+          name={searchValue}
+          placeholder="Note tag"
+        />
+      </form>
       <ul>
-        {state.categoryList.map((category) => {
-          return (
-            <li key={category.id + 1}>
-              <form>
-                <h1>
-                  {category.title}{" "}
-                  <button
-                    onClick={(event) => onDeleteCategory(event, category)}
-                  >
-                    Delete
+        {state.categoryList
+          .filter((category) =>
+            category.tag.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((category) => {
+            return (
+              <li key={category.id + 1}>
+                <form>
+                  <h1>
+                    {category.title}{" "}
+                    <button
+                      onClick={(event) => onDeleteCategory(event, category)}
+                    >
+                      Delete
+                    </button>
+                  </h1>
+                  <h3>{category.tag} </h3>
+                  <br />
+                  <input
+                    value={message}
+                    onChange={addingMessage}
+                    type="text"
+                    name="message"
+                    placeholder="What do you plan to do?"
+                  />
+                  <button onClick={(event) => onAddNote(event, category)}>
+                    Add note
                   </button>
-                </h1>
-                <br />
-                <input
-                  value={message}
-                  onChange={addingMessage}
-                  type="text"
-                  name="message"
-                  placeholder="What do you plan to do?"
-                />
-                <button onClick={(event) => onAddNote(event, category)}>
-                  Add note
-                </button>
-                <br />
-                <ListOfToDo category={category} />
-                <br /> <br />
-              </form>
-            </li>
-          );
-        })}
+                  <br />
+                  <ListOfToDo category={category} />
+                  <br /> <br />
+                </form>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
