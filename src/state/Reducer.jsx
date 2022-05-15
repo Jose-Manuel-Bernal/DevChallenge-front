@@ -92,7 +92,6 @@ function reducer(state, action) {
         ...state,
         categoryList: action.payload.categoryList,
       };
-      console.log(action.payload);
       return stateWithAllCategories;
     case "remove-category":
       const newListOfCategoriesWithoutPayloadCategory =

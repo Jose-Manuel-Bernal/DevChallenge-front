@@ -78,6 +78,7 @@ const Form = () => {
         />
       </form>
       <ul className="card p-5">
+        {console.log(state.categoryList)}
         {state.categoryList
           .filter((category) =>
             category.tag.toLowerCase().includes(searchValue.toLowerCase())
