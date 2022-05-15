@@ -68,15 +68,16 @@ const Form = () => {
 
   return (
     <div>
-      <form>
+      <form className="col-md-6">
         <input
+          className="form-control"
           onChange={handleChangeSearchValue}
           type="text"
           name={searchValue}
-          placeholder="Note tag"
+          placeholder="Filter tag"
         />
       </form>
-      <ul>
+      <ul className="card p-5">
         {state.categoryList
           .filter((category) =>
             category.tag.toLowerCase().includes(searchValue.toLowerCase())
@@ -88,21 +89,26 @@ const Form = () => {
                   <h1>
                     {category.title}{" "}
                     <button
+                      className="btn btn-outline-danger"
                       onClick={(event) => onDeleteCategory(event, category)}
                     >
                       Delete
                     </button>
                   </h1>
-                  <h3>{category.tag} </h3>
+                  <h3>#{category.tag} </h3>
                   <br />
                   <input
+                    className="form-control"
                     value={message}
                     onChange={addingMessage}
                     type="text"
                     name="message"
                     placeholder="What do you plan to do?"
                   />
-                  <button onClick={(event) => onAddNote(event, category)}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={(event) => onAddNote(event, category)}
+                  >
                     Add note
                   </button>
                   <br />

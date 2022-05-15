@@ -65,20 +65,28 @@ const Category = () => {
   };
 
   return (
-    <form ref={formRef}>
-      <input
-        onChange={addingTitle}
-        type="text"
-        name="title"
-        placeholder="To Do List"
-      />
-      <input
-        onChange={addingTag}
-        type="text"
-        name="tag"
-        placeholder="Note tag"
-      />
-      <button onClick={newList}>New List</button>
+    <form className="row g-3 m-4" ref={formRef}>
+      <div className="col-md-6">
+        <input
+          className="form-control"
+          onChange={addingTitle}
+          type="text"
+          name="title"
+          placeholder="To Do List"
+        />
+      </div>
+      <div className="col-md-6">
+        <input
+          className="form-control"
+          onChange={addingTag}
+          type="text"
+          name="tag"
+          placeholder="Note tag"
+        />
+      </div>
+      <button className="btn btn-primary" onClick={newList}>
+        New List
+      </button>
     </form>
   );
 };

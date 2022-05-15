@@ -8,17 +8,27 @@ const ListOfToDo = ({ category }) => {
 
   const showInput = (event, note) => {
     event.preventDefault();
-    document.getElementById(`delete${note.id}`).setAttribute("class", "hidden");
+    document
+      .getElementById(`delete${note.id}`)
+      .setAttribute("class", "hidden ");
     document.getElementById(`update${note.id}`).setAttribute("class", "hidden");
-    document.getElementById(`cancel${note.id}`).setAttribute("class", "");
+    document
+      .getElementById(`cancel${note.id}`)
+      .setAttribute("class", "btn btn-outline-danger");
     document.getElementById(`input${note.id}`).setAttribute("class", "");
-    document.getElementById(`change${note.id}`).setAttribute("class", "");
+    document
+      .getElementById(`change${note.id}`)
+      .setAttribute("class", "btn btn-outline-primary");
   };
 
   const hideInput = (event, note) => {
     event.preventDefault();
-    document.getElementById(`delete${note.id}`).setAttribute("class", "");
-    document.getElementById(`update${note.id}`).setAttribute("class", "");
+    document
+      .getElementById(`delete${note.id}`)
+      .setAttribute("class", "btn btn-outline-danger");
+    document
+      .getElementById(`update${note.id}`)
+      .setAttribute("class", "btn btn-outline-primary");
     document.getElementById(`input${note.id}`).setAttribute("class", "hidden");
     document.getElementById(`change${note.id}`).setAttribute("class", "hidden");
     document.getElementById(`cancel${note.id}`).setAttribute("class", "hidden");
@@ -98,20 +108,29 @@ const ListOfToDo = ({ category }) => {
     (categoryFromForm) => categoryFromForm.id === category.id
   )[0];
   return (
-    <div>
+    <div className="m-4">
       <ul>
         {categoryForNote.notes.map((note) => {
           return (
-            <li
-              style={note.done ? { textDecoration: "line-through" } : {}}
-              key={note.id}
-            >
-              {note.message} <br />
-              <input
-                onChange={(event) => onCheckbox(event, note)}
-                type="checkbox"
-                checked={note.done}
-              />
+            <li>
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    onChange={(event) => onCheckbox(event, note)}
+                    type="checkbox"
+                    checked={note.done}
+                  />
+                  <label
+                    className="form-label"
+                    style={note.done ? { textDecoration: "line-through" } : {}}
+                    key={note.id}
+                  >
+                    {note.message}
+                  </label>
+                </div>
+              </div>
+
               <input
                 id={`input${note.id}`}
                 type="text"
@@ -121,12 +140,14 @@ const ListOfToDo = ({ category }) => {
                 onChange={inputSetMessage}
               />
               <button
+                className="btn btn-outline-danger"
                 id={`delete${note.id}`}
                 onClick={(event) => onDelete(event, note)}
               >
                 Delete
               </button>
               <button
+                className="btn btn-outline-primary"
                 id={`update${note.id}`}
                 onClick={(event) => showInput(event, note)}
                 disabled={note.done}
