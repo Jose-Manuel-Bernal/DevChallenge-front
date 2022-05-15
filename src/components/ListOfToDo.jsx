@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Store } from "./StoreProvider";
+import { Store } from "../state/StoreProvider";
 
 const ListOfToDo = ({ category }) => {
   const { state, dispatch } = useContext(Store);

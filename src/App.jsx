@@ -2,7 +2,7 @@ import "./App.css";
 import Category from "./components/Category";
 import Form from "./components/Form";
 //import ListOfToDo from "./components/ListOfToDo";
-import StoreProvider from "./components/StoreProvider";
+import StoreProvider from "./state/StoreProvider";
 
 function App() {
   return (
